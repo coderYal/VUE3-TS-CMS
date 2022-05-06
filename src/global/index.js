@@ -1,6 +1,5 @@
-import { App } from 'vue'
 import registerElement from './register-element'
-
-export function globalRegister(app: App): void {
+export function globalRegister(app) {
   app.use(registerElement)
 }
+//# sourceMappingURL=index.js.map
