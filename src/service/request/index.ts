@@ -3,6 +3,7 @@ import type { AxiosInstance } from 'axios'
 import type { AlAxiosRequestConfig } from '@/service/request/type'
 
 import { ElLoading } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import type { ILoadingInstance } from 'element-plus/lib/el-loading/src/loading.type'
 
 const INIT_SHOW_LOADING = false
@@ -27,7 +28,9 @@ class AlRequest {
       (res) => res.data,
       (err) => {
         if (err && err.response) {
-          const { response: status } = err
+          const {
+            response: { status }
+          } = err
           switch (status) {
             case 400:
               err.message = '请求错误'
@@ -66,6 +69,7 @@ class AlRequest {
               break
           }
         }
+        ElMessage.error(err.message)
         return Promise.reject(err)
       }
     )

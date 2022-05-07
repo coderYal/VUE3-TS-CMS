@@ -1,28 +1,8 @@
 import AlRequest from '@/service/request'
+import { BASE_URL, TIME_OUT } from '@/service/request/config'
 const alRequest = new AlRequest({
-  baseURL: 'http://152.136.185.210:5000/',
-  interceptors: {
-    // 请求拦截成功
-    interceptorRequestOnFulfilled(config) {
-      console.log('请求拦截成功', config)
-      return config
-    },
-    // 请求拦截失败
-    interceptorRequestRejected(err) {
-      console.log('请求拦截失败')
-      return err
-    },
-    // 响应拦截成功
-    interceptorResponseOnFulfilled(data) {
-      console.log('响应拦截成功', data)
-      return data
-    },
-    // 响应拦截失败
-    interceptorResponseOnRejected(err) {
-      console.log('响应拦截失败')
-      return err
-    }
-  }
+  baseURL: BASE_URL,
+  timeout: TIME_OUT
 })
 export default alRequest
 //# sourceMappingURL=index.js.map

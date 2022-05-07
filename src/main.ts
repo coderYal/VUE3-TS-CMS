@@ -1,7 +1,11 @@
 import { createApp } from 'vue'
 import router from './router'
+import store from '@/store'
 import { globalRegister } from './global'
 
 import App from './App.vue'
 
-createApp(App).use(router).use(globalRegister).mount('#app')
+import 'normalize.css'
+import '@/assets/css/index.scss'
+
+createApp(App).use(router).use(store).use(globalRegister).mount('#app')

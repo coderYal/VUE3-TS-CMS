@@ -4,12 +4,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup></script>
 
-export default defineComponent({
-  name: 'App'
-})
-</script>
-
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.app {
+  width: 100%;
+  height: 100%;
+}
+</style>

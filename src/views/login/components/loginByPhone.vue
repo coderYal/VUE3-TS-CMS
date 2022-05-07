@@ -1,5 +1,5 @@
 <template>
-  <div class="loginByPhone"></div>
+  <div class="loginByPhone">手机登录</div>
 </template>
 
 <script>
