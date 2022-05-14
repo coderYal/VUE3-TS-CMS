@@ -9,12 +9,13 @@ const login = () => import('views/login/login.vue')
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: 'main'
+    redirect: '/main'
   },
   {
     path: '/main',
     name: 'main',
-    component: main
+    component: main,
+    children: []
   },
   {
     path: '/login',
@@ -28,7 +29,7 @@ const router = createRouter({
   history: createWebHistory()
 })
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
   const token = localCache.getLocalCache('token')
   if (to.path !== '/login' && !token) return '/login'
 })

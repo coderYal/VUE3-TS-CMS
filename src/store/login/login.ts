@@ -18,18 +18,19 @@ const loginModule: Module<ILoginStore, IRootStore> = {
     loginCacheToken(state, { token }) {
       state.token = token
       localCache.setLocalCache('token', token)
-      router.push('/main')
     }
   },
   actions: {
     // 处理登录
-    handleLogin({ commit }, payload: IAccount) {
+    handleLogin({ commit, dispatch }, payload: IAccount) {
       return new Promise((resole) => {
         accountLoginRequest(payload).then(({ data }) => {
           const { token } = data
           if (token) {
             resole(true)
             commit('loginCacheToken', { token })
+            dispatch('getInitInfoData', null, { root: true })
+            router.push('/main')
           }
         })
       })

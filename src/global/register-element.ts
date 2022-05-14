@@ -1,5 +1,10 @@
 import { App } from 'vue'
 import 'element-plus/lib/theme-chalk/base.css'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 import {
   ElButton,
   ElTable,
@@ -10,7 +15,15 @@ import {
   ElFormItem,
   ElInput,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItem,
+  ElMenuItemGroup
 } from 'element-plus'
 
 const components = [
@@ -23,11 +36,22 @@ const components = [
   ElFormItem,
   ElInput,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItem,
+  ElMenuItemGroup
 ]
 
 export default function (app: App): void {
   components.forEach((cpn) => {
     app.component(cpn.name, cpn)
   })
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 }

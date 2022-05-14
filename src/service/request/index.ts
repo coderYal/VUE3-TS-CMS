@@ -6,22 +6,26 @@ import { ElLoading } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import type { ILoadingInstance } from 'element-plus/lib/el-loading/src/loading.type'
 
-const INIT_SHOW_LOADING = false
+import localCache from '@/utils/localCache'
+
+const INIT_SHOW_LOADING = true
 
 class AlRequest {
   instance: AxiosInstance
   config: AlAxiosRequestConfig
   loading?: ILoadingInstance // loading的实例，并且是单例模式
-  showLoading: boolean // 是否显示loading
 
   constructor(config: AlAxiosRequestConfig) {
     this.instance = axios.create(config)
     this.config = config
-    this.showLoading = config.showLoading ?? INIT_SHOW_LOADING // 默认不显示loading
 
     // 给每个实例都进行全局的请求拦截和响应拦截
     this.instance.interceptors.request.use(
-      (config) => config,
+      (config) => {
+        const token = localCache.getLocalCache('token')
+        config.headers!.Authorization = `Bearer ${token}`
+        return config
+      },
       (err) => err
     )
     this.instance.interceptors.response.use(
@@ -87,6 +91,7 @@ class AlRequest {
 
   request<T>(config: AlAxiosRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
+      config.showLoading = config.showLoading ?? INIT_SHOW_LOADING // 默认不显示loading
       // 看当前接口是否传递要加载loading
       if (config.showLoading) {
         this.loading = ElLoading.service({
@@ -108,13 +113,11 @@ class AlRequest {
           }
           // 成功取消loading并且重置showLoading为初始值
           this.loading?.close()
-          this.showLoading = INIT_SHOW_LOADING
           resolve(res)
         })
         .catch((err) => {
           // 请求失败取消loading并且重置showLoading为初始值
           this.loading?.close()
-          this.showLoading = INIT_SHOW_LOADING
           reject(err)
         })
     })

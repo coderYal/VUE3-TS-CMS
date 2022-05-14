@@ -1,26 +1,35 @@
 <template>
-  <div class="main">{{ test }}</div>
-  <div class="main">{{ test1 }}</div>
+  <div class="main">
+    <el-container class="container">
+      <el-aside class="aside" width="200px">
+        <nav-menu />
+      </el-aside>
+      <el-container class="box-container">
+        <el-header></el-header>
+        <el-main class="box-main">
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
-<script>
-import { defineComponent, reactive, ref } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const test = reactive({
-      a: 1
-    })
-    const test1 = ref(2)
-    console.log(test.value)
-    console.log(test1.value)
-
-    return {
-      test,
-      test1
-    }
-  }
-})
+<script lang="ts" setup>
+import NavMenu from '@/components/navMenu'
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.main,
+.container {
+  height: 100%;
+  overflow: hidden;
+}
+.main {
+  .aside {
+    background-color: #001529;
+  }
+  .box-main {
+    background-color: #f0f2f5;
+  }
+}
+</style>

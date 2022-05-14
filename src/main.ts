@@ -1,11 +1,16 @@
 import { createApp } from 'vue'
-import router from './router'
-import store from '@/store'
 import { globalRegister } from './global'
+
+import 'normalize.css'
+import './assets/css/index.scss'
 
 import App from './App.vue'
 
-import 'normalize.css'
-import '@/assets/css/index.scss'
+import store from './store'
+import router from './router'
+import { setupStore } from './store'
 
-createApp(App).use(router).use(store).use(globalRegister).mount('#app')
+const app = createApp(App).use(globalRegister).use(store)
+setupStore()
+
+app.use(router).mount('#app')
