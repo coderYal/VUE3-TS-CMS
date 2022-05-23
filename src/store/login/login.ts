@@ -7,12 +7,11 @@ import { accountLoginRequest } from '@/service/login/login'
 
 import localCache from '@/utils/localCache'
 
-import router from '@/router'
-
 const loginModule: Module<ILoginStore, IRootStore> = {
   namespaced: true,
   state: {
-    token: ''
+    token: '',
+    name: ''
   },
   mutations: {
     loginCacheToken(state, { token }) {
@@ -30,7 +29,6 @@ const loginModule: Module<ILoginStore, IRootStore> = {
             resole(true)
             commit('loginCacheToken', { token })
             dispatch('getInitInfoData', null, { root: true })
-            router.push('/main')
           }
         })
       })

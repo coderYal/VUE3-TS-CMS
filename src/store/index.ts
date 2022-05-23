@@ -21,18 +21,19 @@ const store = createStore<IRootStore>({
   },
   actions: {
     async getInitInfoData({ commit }) {
+      const token = localCache.getLocalCache('token')
+      if (!token) return
       const data = await getMenuList()
       const {
         data: { list }
       } = data
-      const token = localCache.getLocalCache('token')
       commit('changeMenuList', { list })
       commit('login/loginCacheToken', { token })
       const routes = mapMenusToRoutes(list)
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
-      console.log(router.getRoutes())
+      router.push('/main')
     }
   },
   modules: {

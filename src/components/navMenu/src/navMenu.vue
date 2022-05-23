@@ -2,17 +2,18 @@
   <div class="nav-menu">
     <div class="header">
       <img src="~@/assets/images/logo.svg" alt="" />
-      <span>TypeScript</span>
+      <span v-if="!props.collapse">TypeScript</span>
     </div>
     <div class="menu-box">
       <el-menu
-        default-active="39"
-        class="el-menu-vertical-demo"
+        :default-active="`${defaultActive}`"
+        class="el-menu-vertical"
         text-color="#b7bdc3"
         active-text-color="#fff"
         background-color="#001529"
         @open="handleOpen"
         @close="handleClose"
+        :collapse="props.collapse"
       >
         <template v-for="menuItem in userMenuList" :key="menuItem.id">
           <template v-if="menuItem.type === 1">
@@ -34,7 +35,10 @@
                   "
                 >
                   <el-menu-item-group>
-                    <el-menu-item :index="menuChildrenItem.id + ''">
+                    <el-menu-item
+                      @click="handleMenuItemClick(menuChildrenItem)"
+                      :index="menuChildrenItem.id + ''"
+                    >
                       {{ menuChildrenItem.name }}
                     </el-menu-item>
                   </el-menu-item-group>
@@ -46,7 +50,10 @@
                       v-for="menuChildrenSubMenuItem in menuChildrenItem.children"
                       :key="menuChildrenSubMenuItem.id"
                     >
-                      <el-menu-item :index="menuChildrenSubMenuItem.id + ''">
+                      <el-menu-item
+                        @click="handleMenuItemClick(menuChildrenSubMenuItem)"
+                        :index="menuChildrenSubMenuItem.id + ''"
+                      >
                         {{ menuChildrenSubMenuItem.name }}
                       </el-menu-item>
                     </template>
@@ -56,15 +63,6 @@
             </el-submenu>
           </template>
         </template>
-        <!--<el-menu-item index="2">-->
-        <!--  <span>Navigator Two</span>-->
-        <!--</el-menu-item>-->
-        <!--<el-menu-item index="3" disabled>-->
-        <!--  <span>Navigator Three</span>-->
-        <!--</el-menu-item>-->
-        <!--<el-menu-item index="4">-->
-        <!--  <span>Navigator Four</span>-->
-        <!--</el-menu-item>-->
       </el-menu>
     </div>
   </div>
@@ -72,10 +70,17 @@
 
 <script lang="ts" setup>
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { ref, computed, defineProps } from 'vue'
+
+import router from '@/router'
+import { useRoute } from 'vue-router'
 
 const store = useStore()
 const userMenuList = computed(() => store.state.navMenuList)
+
+import { pathMapToMenu } from '@/utils/mapMenus'
+
+const props = defineProps(['collapse'])
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -83,6 +88,15 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
+const handleMenuItemClick = (item: any) => {
+  router.push(item.url)
+}
+
+const $route = useRoute()
+const currentPath = $route.path
+
+const pathMenu = pathMapToMenu(userMenuList.value, currentPath)
+const defaultActive = ref(pathMenu.id)
 </script>
 
 <style lang="scss" scoped>
@@ -96,6 +110,9 @@ const handleClose = (key: string, keyPath: string[]) => {
     overflow: -moz-scrollbars-none;
     &::-webkit-scrollbar {
       width: 0 !important;
+    }
+    .el-menu-vertical {
+      border-right: none;
     }
   }
 }
