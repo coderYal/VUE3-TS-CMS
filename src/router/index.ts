@@ -5,7 +5,6 @@ import localCache from '@/utils/localCache'
 
 const main = () => import('views/main/main.vue')
 const login = () => import('views/login/login.vue')
-const notFound = () => import('views/notFound/notFound.vue')
 
 import { firstMenu } from '@/utils/mapMenus'
 
@@ -13,7 +12,6 @@ const routes: RouteRecordRaw[] = [
   { path: '/', redirect: '/main' },
   { path: '/main', name: 'main', component: main },
   { path: '/login', name: 'login', component: login }
-  // { path: '/:pathMatch(.*)*', name: 'notFound', component: notFound }
 ]
 
 const router = createRouter({
