@@ -1,6 +1,7 @@
 import alRequest from '@/service'
 
-import { IAccount, ILoginData } from '@/service/login/type'
+import { IAccount } from '@/service/login/type'
+import { ICommonResult } from '@/service/common/commonType'
 
 const LOGIN_API = {
   accountLogin: 'login',
@@ -11,8 +12,8 @@ const LOGIN_API = {
  * 登录接口
  * @param account
  */
-export function accountLoginRequest(account: IAccount): Promise<ILoginData> {
-  return alRequest.request<ILoginData>({
+export function accountLoginRequest(account: IAccount): Promise<ICommonResult> {
+  return alRequest.request<ICommonResult>({
     method: 'POST',
     url: LOGIN_API.accountLogin,
     data: account
@@ -22,8 +23,8 @@ export function accountLoginRequest(account: IAccount): Promise<ILoginData> {
 /**
  * 获取菜单列表
  */
-export function getMenuList(): Promise<ILoginData> {
-  return alRequest.request<ILoginData>({
+export function getMenuList(): Promise<ICommonResult> {
+  return alRequest.request<ICommonResult>({
     method: 'POST',
     url: LOGIN_API.menu
   })

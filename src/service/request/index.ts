@@ -29,7 +29,14 @@ class AlRequest {
       (err) => err
     )
     this.instance.interceptors.response.use(
-      (res) => res.data,
+      ({ data }) => {
+        const { code } = data
+        if (code < 0 || code >= 300) {
+          ElMessage.error(data.data)
+          throw new Error(data.data)
+        }
+        return data
+      },
       (err) => {
         if (err && err.response) {
           const {

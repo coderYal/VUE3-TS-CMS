@@ -1,8 +1,6 @@
 import { App } from 'vue'
 import 'element-plus/lib/theme-chalk/base.css'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import {
@@ -28,12 +26,18 @@ import {
   ElBreadcrumbItem,
   ElDropdown,
   ElDropdownItem,
-  ElDropdownMenu
+  ElDropdownMenu,
+  ElTableColumn,
+  ElCard,
+  ElImage,
+  ElTag,
+  ElPagination
 } from 'element-plus'
 
 const components = [
   ElButton,
   ElTable,
+  ElTableColumn,
   ElTabs,
   ElTabPane,
   ElIcon,
@@ -54,7 +58,11 @@ const components = [
   ElBreadcrumbItem,
   ElDropdown,
   ElDropdownItem,
-  ElDropdownMenu
+  ElDropdownMenu,
+  ElCard,
+  ElImage,
+  ElTag,
+  ElPagination
 ]
 
 export default function (app: App): void {
